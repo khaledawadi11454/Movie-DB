@@ -58,6 +58,27 @@ app.get('/movies/delete', (req, res) => {
   // delete a movie
 });
   
+app.get('/movies/read/by-date', (req, res) => {
+    const moviesSortedByDate = movies.sort((a, b) => a.date - b.date);
+    res.json({ status: 200, data: moviesSortedByDate });
+  });
+  
+  app.get('/movies/read/by-rating', (req, res) => {
+    const moviesSortedByRating = movies.sort((a, b) => b.rating - a.rating);
+    res.json({ status: 200, data: moviesSortedByRating });
+  });
+  
+  app.get('/movies/read/by-title', (req, res) => {
+    const moviesSortedByTitle = movies.sort((a, b) => {
+      if (a.title < b.title) return -1;
+      if (a.title > b.title) return 1;
+      return 0;
+    });
+    res.json({ status: 200, data: moviesSortedByTitle });
+  });
+
+
+  
   app.listen(3000, () => {
     console.log('Server listening on port 3000');
   });
