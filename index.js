@@ -114,7 +114,19 @@ app.get("/movies/delete/:id", (req, res) => {
       res.status(200).json({ status: 200, data: movies })
   }
 })
-  
+app.get("/movies/edit/:id", (req, res) => {
+  const id = parseInt(req.params.id)
+  if (id > movies.length) {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  } else {
+      const movie = movies[id - 1]
+      if (req.query.title) movie.title = req.query.title
+      if (req.query.rating) movie.rating = req.query.rating
+      if (req.query.year) movie.year = req.query.year
+      res.status(200).json({ status: 200, data: movies })
+  }
+})
+
   app.listen(3000, () => {
     console.log('Server listening on port 3000');
   });
